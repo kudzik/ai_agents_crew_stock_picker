@@ -1,64 +1,158 @@
-from crewai import Agent, Crew, Process, Task
-from crewai.project import CrewBase, agent, crew, task
-from crewai.agents.agent_builder.base_agent import BaseAgent
 from typing import List
-# If you want to run a snippet of code before or after the crew starts,
-# you can use the @before_kickoff and @after_kickoff decorators
-# https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
+
+from crewai import Agent, Crew, Process, Task
+from crewai.agents.agent_builder.base_agent import BaseAgent
+from crewai.memory import EntityMemory, LongTermMemory, ShortTermMemory
+from crewai.memory.storage.ltm_sqlite_storage import LTMSQLiteStorage
+from crewai.memory.storage.rag_storage import RAGStorage
+from crewai.project import CrewBase, agent, crew, task
+from crewai_tools import SerperDevTool
+from pydantic import BaseModel, Field
+
+from .tools.push_tool import PushNotificationTool
+
+
+class TrendingCompany(BaseModel):
+    """Firma, która jest w wiadomościach i przyciąga uwagę"""
+
+    name: str = Field(description="Nazwa firmy")
+    ticker: str = Field(description="Symbol giełdowy firmy")
+    reason: str = Field(description="Powód, dlaczego firma jest w wiadomościach")
+
+
+class TrendingCompanyList(BaseModel):
+    """Lista wielu firm w trendzie w wiadomościach"""
+
+    companies: List[TrendingCompany] = Field(
+        description="Lista firm, o których jest głośno w wiadomościach"
+    )
+
+
+class TrendingCompanyResearch(BaseModel):
+    """Szczegółowa analiza firmy"""
+
+    name: str = Field(description="Nazwa firmy")
+    market_position: str = Field(
+        description="Aktualna pozycja rynkowa i analiza konkurencji"
+    )
+    future_outlook: str = Field(
+        description="Perspektywy rozwoju i potencjał inwestycyjny"
+    )
+    investment_potential: str = Field(
+        description="Potencjał inwestycyjny i odpowiedniość dla inwestycji"
+    )
+
+
+class TrendingCompanyResearchList(BaseModel):
+    """A list of detailed research on all the companies"""
+
+    research_list: List[TrendingCompanyResearch] = Field(
+        description="Kompleksowa analiza wszystkich firm w trendzie"
+    )
+
 
 @CrewBase
-class AiAgentsCrewStockPicker():
+class AiAgentsCrewStockPicker:
     """AiAgentsCrewStockPicker crew"""
 
     agents: List[BaseAgent]
     tasks: List[Task]
 
-    # Learn more about YAML configuration files here:
-    # Agents: https://docs.crewai.com/concepts/agents#yaml-configuration-recommended
-    # Tasks: https://docs.crewai.com/concepts/tasks#yaml-configuration-recommended
-    
-    # If you would like to add tools to your agents, you can learn more about it here:
-    # https://docs.crewai.com/concepts/agents#agent-tools
     @agent
-    def researcher(self) -> Agent:
+    def trending_company_finder(self) -> Agent:
         return Agent(
-            config=self.agents_config['researcher'], # type: ignore[index]
-            verbose=True
+            config=self.agents_config["trending_company_finder"],
+            tools=[SerperDevTool()],
+            memory=True,
         )
 
     @agent
-    def reporting_analyst(self) -> Agent:
+    def financial_researcher(self) -> Agent:
         return Agent(
-            config=self.agents_config['reporting_analyst'], # type: ignore[index]
-            verbose=True
+            config=self.agents_config["financial_researcher"], tools=[SerperDevTool()]
         )
 
-    # To learn more about structured task outputs,
-    # task dependencies, and task callbacks, check out the documentation:
-    # https://docs.crewai.com/concepts/tasks#overview-of-a-task
+    @agent
+    def stock_picker(self) -> Agent:
+        return Agent(
+            config=self.agents_config["stock_picker"],
+            tools=[PushNotificationTool()],
+            memory=True,
+        )
+
+    @task
+    def find_trending_companies(self) -> Task:
+        return Task(
+            config=self.tasks_config["find_trending_companies"],
+            output_pydantic=TrendingCompanyList,
+        )
+
+    @task
+    def research_trending_companies(self) -> Task:
+        return Task(
+            config=self.tasks_config["research_trending_companies"],
+            output_pydantic=TrendingCompanyResearchList,
+        )
+
+    @task
+    def pick_best_company(self) -> Task:
+        return Task(
+            config=self.tasks_config["pick_best_company"],
+        )
+
     @task
     def research_task(self) -> Task:
         return Task(
-            config=self.tasks_config['research_task'], # type: ignore[index]
+            config=self.tasks_config["research_task"],  # type: ignore[index]
         )
 
     @task
     def reporting_task(self) -> Task:
         return Task(
-            config=self.tasks_config['reporting_task'], # type: ignore[index]
-            output_file='report.md'
+            config=self.tasks_config["reporting_task"],  # type: ignore[index]
+            output_file="output/report.md",
         )
 
     @crew
     def crew(self) -> Crew:
-        """Creates the AiAgentsCrewStockPicker crew"""
-        # To learn how to add knowledge sources to your crew, check out the documentation:
-        # https://docs.crewai.com/concepts/knowledge#what-is-knowledge
+        "Creates the Stock Picker Crew"
+
+        manager = Agent(config=self.agents_config["manager"], allow_delegation=True)
+
+        long_term_memory = LongTermMemory(
+            storage=LTMSQLiteStorage(db_path="./memory/long_term_mem_store.db")
+        )
+
+        short_term_memory = ShortTermMemory(
+            storage=RAGStorage(
+                embedder_config={
+                    "provider": "openai",
+                    "config": {"model": "text-embedding-3-small"},
+                },
+                type="short_term",
+                path="./memory",
+            )
+        )
+
+        entity_memory = EntityMemory(
+            storage=RAGStorage(
+                embedder_config={
+                    "provider": "openai",
+                    "config": {"model": "text-embedding-3-small"},
+                },
+                type="short_term",
+                path="./memory",
+            )
+        )
 
         return Crew(
-            agents=self.agents, # Automatically created by the @agent decorator
-            tasks=self.tasks, # Automatically created by the @task decorator
-            process=Process.sequential,
+            agents=self.agents,
+            tasks=self.tasks,
+            process=Process.hierarchical,
             verbose=True,
-            # process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
+            manager_agent=manager,
+            memory=True,
+            long_term_memory=long_term_memory,
+            short_term_memory=short_term_memory,
+            entity_memory=entity_memory,
         )
