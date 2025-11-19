@@ -1,0 +1,30 @@
+# tłumaczenie na język polski
+find_trending_companies:
+  description: >
+    Znajdź najbardziej popularne firmy w trendzie w wiadomościach w {sector} poprzez przeszukiwanie najnowszych wiadomości. Znajdź nowe firmy, których nie znaleźliście wcześniej.
+  expected_output: >
+    Lista firm w trendzie w wiadomościach w {sector}
+  agent: trending_company_finder
+  output_file: output/trending_companies.json
+
+research_trending_companies:
+  description: >
+    Na podstawie listy firm w trendzie w wiadomościach, dostarcz szczegółową analizę każdej firmy w raporcie poprzez przeszukiwanie internetu
+  expected_output: >
+    Raport zawierający szczegółową analizę każdej firmy
+  agent: financial_researcher
+  context:
+    - find_trending_companies
+  output_file: output/research_report.json
+
+pick_best_company:
+  description: >
+    Analizuj wyniki badań i wybierz najlepszą firmę do inwestycji.
+    Wyślij powiadomienie do użytkownika z decyzją i 1 zdaniem uzasadnienia.
+    Następnie odpowiedz szczegółowym raportem na temat, dlaczego wybraliście tę firmę, a które firmy nie zostały wybrane.
+  expected_output: >
+    Wybrana firma i dlaczego została wybrana; firmy, które nie zostały wybrane i dlaczego nie zostały wybrane.
+  agent: stock_picker
+  context:
+    - research_trending_companies
+  output_file: output/decision.md

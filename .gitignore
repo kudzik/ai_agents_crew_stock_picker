@@ -1,3 +1,6 @@
 .env
 __pycache__/
 .DS_Store
+.cursor/
+docs/3_3_raw.md
+

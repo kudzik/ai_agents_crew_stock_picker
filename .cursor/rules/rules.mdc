@@ -1,0 +1,49 @@
+---
+alwaysApply: true
+---
+
+# Rules for Cursor
+
+## 1. 🧠 Historia i Kontekst Projektu
+
+- **Analiza wstępna:** Na początku każdej sesji pobierz i przeanalizuj plik historii projektu.
+- **Aktualizacja:** Po wprowadzeniu istotnych zmian, zaktualizuj plik historii, aby zachować ciągłość pracy.
+
+## 2. 🐍 Standardy Kodu (Python & CrewAI)
+
+- **Refaktoryzacja:** Kod ma być zawsze zgodny z zasadami "Czystego Kodu" (Clean Code) i standardem PEP 8.
+- **Komentarze:** Dodawaj zwięzłe komentarze wyjaśniające "dlaczego" coś zostało zrobione, a nie tylko "co" (szczególnie w kluczowych miejscach logiki agentów).
+- **Specyfika CrewAI:**
+  - Zadbaj o logiczny i modularny podział na Agentów i Zadania (Tasks).
+  - Upewnij się, że definicje narzędzi (Tools) są poprawne.
+
+- Sprawdź poprawność logiczną i składniową.
+- Uruchom kod, aby zweryfikować jego działanie.
+
+## 3. 📝 Treści Edukacyjne i Dokumentacja
+
+- **Język:** Wszystkie notatki, wpisy na bloga i kursy twórz w **języku polskim**.
+- **Format:** Używaj formatu Markdown.
+- **Notatki do nauki:** Mają być zwięzłe, przejrzyste i pomagać w utrwalaniu wiedzy.
+- **Wpis na bloga / Kurs:**
+  - **Styl:** Angażujący, prosty, z odrobiną humoru. Pisz tak, by zaciekawić początkującego.
+  - **Struktura:** Ciągły, spójny tekst (pomiń daty dzienne). Kurs ma prowadzić czytelnika krok po kroku ("od zera do bohatera").
+  - **Zawartość:** Wyjaśnienia koncepcji, analogie z życia wzięte, przykłady kodu oraz analiza tego kodu.
+
+## 4. 🚀 Przepływ Pracy: Od Kodu do Kursu
+
+Gdy otrzymasz polecenie stworzenia materiału edukacyjnego na podstawie kodu:
+
+1. **Najpierw Kod:** Zrefaktoryzuj kod źródłowy (popraw błędy, oczyść strukturę).
+2. **Potem Treść:** Na podstawie poprawionego kodu i notatek stwórz plik z kursem (np. `KURS.md` lub `BLOG.md`).
+3. **Uzupełnianie luk:** Jeśli w kodzie lub notatkach brakuje wyjaśnienia jakiejś koncepcji, samodzielnie ją uzupełnij i wytłumacz w przystępny sposób.
+4. **Weryfikacja:** Upewnij się, że całość jest merytorycznie poprawna i wolna od błędów logicznych.
+
+## ✋ Zasada Stop & Ask
+
+- Jeśli w moich instrukcjach brakuje kluczowych informacji lub są one niejednoznaczne, **nie zgaduj**. Zatrzymaj się i zadaj mi pytania doprecyzujące (np. o strukturę katalogów lub wybór modelu LLM), zanim zaczniesz generować kod.
+
+Autor: Artur Kud
+data: 11.2025
+email: <kudzik@outlook.com>
+github: <https://github.com/kudzik>
