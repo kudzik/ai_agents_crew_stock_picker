@@ -21,7 +21,7 @@ pick_best_company:
   description: >
     Analizuj wyniki badań i wybierz najlepszą firmę do inwestycji.
     Wyślij powiadomienie do użytkownika z decyzją i 1 zdaniem uzasadnienia.
-    Następnie odpowiedz szczegółowym raportem na temat, dlaczego wybraliście tę firmę, a które firmy nie zostały wybrane.
+    Następnie odpowiedz szczegółowym raportem po polsku na temat, dlaczego wybraliście tę firmę, a które firmy nie zostały wybrane.
   expected_output: >
     Wybrana firma i dlaczego została wybrana; firmy, które nie zostały wybrane i dlaczego nie zostały wybrane.
   agent: stock_picker

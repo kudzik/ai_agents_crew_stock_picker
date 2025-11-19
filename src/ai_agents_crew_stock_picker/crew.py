@@ -100,19 +100,6 @@ class AiAgentsCrewStockPicker:
             config=self.tasks_config["pick_best_company"],
         )
 
-    @task
-    def research_task(self) -> Task:
-        return Task(
-            config=self.tasks_config["research_task"],  # type: ignore[index]
-        )
-
-    @task
-    def reporting_task(self) -> Task:
-        return Task(
-            config=self.tasks_config["reporting_task"],  # type: ignore[index]
-            output_file="output/report.md",
-        )
-
     @crew
     def crew(self) -> Crew:
         "Creates the Stock Picker Crew"
@@ -127,7 +114,7 @@ class AiAgentsCrewStockPicker:
             storage=RAGStorage(
                 embedder_config={
                     "provider": "openai",
-                    "config": {"model": "text-embedding-3-small"},
+                    "model": "text-embedding-3-small",  # Bezpośrednio tutaj
                 },
                 type="short_term",
                 path="./memory",
@@ -138,7 +125,7 @@ class AiAgentsCrewStockPicker:
             storage=RAGStorage(
                 embedder_config={
                     "provider": "openai",
-                    "config": {"model": "text-embedding-3-small"},
+                    "model": "text-embedding-3-small",  # Bezpośrednio, bez zagnieżdżonego "config"
                 },
                 type="short_term",
                 path="./memory",

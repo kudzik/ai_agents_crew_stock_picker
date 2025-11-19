@@ -1,0 +1,34 @@
+{
+  "research_list": [
+    {
+      "name": "Cognizant",
+      "market_position": "Cognizant is a leading global IT services firm focused on technology and consulting. Despite facing challenges, the company has shown resiliency with a projected full-year revenue range of $19.2 to $19.6 billion for 2023, reflecting a slight decline or modest growth.",
+      "future_outlook": "The company aims for an EPS growth between 7% to 10%, largely driven by its investment in AI and strategic acquisitions. Wall Street rates Cognizant as a buy with potential upside as it adjusts its growth strategies.",
+      "investment_potential": "Cognizant is regarded as undervalued compared to peers, which presents a compelling investment opportunity for growth-focused investors."
+    },
+    {
+      "name": "Salesforce",
+      "market_position": "Salesforce maintains its status as a leader in the cloud software market and is expanding operations with significant investments, including a $15 billion commitment to its San Francisco headquarters.",
+      "future_outlook": "The company's revenue forecast for 2030 has been raised to over $60 billion, reflecting robust growth expectations despite a recent layoff of 4,000 employees in response to automation challenges.",
+      "investment_potential": "Despite job cuts, the long-term outlook remains positive as the demand for Salesforce's cloud solutions continues to grow, making it a strong candidate for potential investment."
+    },
+    {
+      "name": "AI Factory",
+      "market_position": "AI Factory stands at the forefront of AI innovations in Silicon Valley, contributing to the competitive landscape dominated by tech giants like Google and Microsoft.",
+      "future_outlook": "The global AI market is projected to reach $4.8 trillion by 2033, with AI Factory positioned to capture a share of this rapid growth as investment in AI technologies increases.",
+      "investment_potential": "As part of the evolving AI landscape, AI Factory presents significant growth potential, appealing to investors looking to capitalize on advancements in artificial intelligence and machine learning."
+    },
+    {
+      "name": "Exelixis",
+      "market_position": "Exelixis is a notable player in the biotech space, particularly recognized for the commercial success of its cabozantinib franchise, which saw a revenue increase of 19% YoY.",
+      "future_outlook": "The company aims to strengthen its pipeline and project a potential upside in stock price, with estimates indicating it could reach $61 by 2027 based on conservative valuations.",
+      "investment_potential": "With ongoing development and a growing market for cancer therapies, Exelixis offers a compelling investment profile for those interested in biotech stocks."
+    },
+    {
+      "name": "Palantir Technologies",
+      "market_position": "Palantir has solidified its position in the big data analytics space, especially within government contracts. Its stock has experienced a substantial rise of nearly 154% in 2023.",
+      "future_outlook": "The company forecasts significant market growth, with projections indicating an explosive expansion in the AI software sector, potentially achieving $237 billion in annual revenue by 2034.",
+      "investment_potential": "Given its innovative platform and strong customer growth, Palantir is seen as a high-risk, high-reward investment, with potential for future profitability supporting a continued upward trajectory in its stock price."
+    }
+  ]
+}

@@ -7,9 +7,9 @@ from pydantic import BaseModel, Field
 
 
 class PushNotification(BaseModel):
-    """Message to be sent to the user"""
+    """Powiadomienie do użytkownika"""
 
-    message: str = Field(..., description="Message to be sent to the user.")
+    message: str = Field(..., description="Wyślij powiadomienie do użytkownika.")
 
 
 class PushNotificationTool(BaseTool):
@@ -26,3 +26,8 @@ class PushNotificationTool(BaseTool):
         payload = {"user": pushover_user, "token": pushover_token, "message": message}
         requests.post(pushover_url, data=payload)
         return '{"notification": "ok"}'
+
+
+if __name__ == "__main__":
+    tool = PushNotificationTool()
+    tool.run(message="Test message")
